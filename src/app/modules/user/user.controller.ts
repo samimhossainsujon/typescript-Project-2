@@ -34,8 +34,6 @@ const getAllUser = async (req: Request, res: Response) => {
   }
 };
 
-
-
 export const userController = {
   createUser,
   getAllUser,

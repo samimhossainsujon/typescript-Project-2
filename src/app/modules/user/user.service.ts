@@ -44,15 +44,52 @@ const getSingelUserFromDB = async (userId: string) => {
   return result;
 };
 
-
 // =======================================
-// 
+// update User Data In DB
 // =======================================
 
+const updateUserDataInDB = async (
+  userId: string,
+  updatedData: {
+    username?: string;
+    fullNames?: {
+      firstName: string;
+      lastName: string;
+    };
+    age?: number;
+    email?: string;
+    isActive?: boolean;
+    hobbies?: string[];
+    address?: {
+      street: string;
+      city: string;
+      country: string;
+    };
+  },
+) => {
+  const result = await UserModel.findOneAndUpdate({ userId }, updatedData, {
+    new: true,
+  }).select({
+    userId: 1,
+    username: 1,
+    fullNames: 1,
+    age: 1,
+    email: 1,
+    isActive: 1,
+    hobbies: 1,
+    address: 1,
+    _id: 0,
+  });
 
+  if (!result) {
+    throw new Error('User not found');
+  }
 
+  return result;
+};
 export const userServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getSingelUserFromDB,
+  updateUserDataInDB,
 };

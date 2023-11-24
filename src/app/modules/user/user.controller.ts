@@ -40,13 +40,13 @@ const getAllUser = async (req: Request, res: Response) => {
 
 const getSingelUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;   
+    const userId = req.params.userId;
     if (!userId) {
-      throw new Error('User ID is required'); 
+      throw new Error('User ID is required');
     }
     const result = await userServices.getSingelUserFromDB(userId);
     if (!result) {
-      throw new Error('User not found'); 
+      throw new Error('User not found');
     }
     res.status(200).json({
       success: true,
@@ -66,11 +66,37 @@ const getSingelUser = async (req: Request, res: Response) => {
 };
 
 // =========================================
-//  
+//  PUT singel data by userId
 // =========================================
+
+const updateSingelUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const updatedData = req.body;
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+    const result = await userServices.updateUserDataInDB(userId, updatedData);
+    res.status(200).json({
+      success: true,
+      message: 'User updated successfully!',
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 400,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
 export const userController = {
   createUser,
   getAllUser,
   getSingelUser,
+  updateSingelUser,
 };

@@ -1,22 +1,25 @@
 import { Schema, model } from 'mongoose';
 import { User, addres, fullName, order } from './user/user.interface';
 
-const fullNameSchema = new Schema<fullName>({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-});
+const fullNameSchema = new Schema<fullName>(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+  },
+  { _id: false },
+);
 
 const addressSchema = new Schema<addres>({
   street: { type: String, required: true },
   city: { type: String, required: true },
   country: { type: String, required: true },
-});
+}, { _id: false } );
 
 const ordersSchema = new Schema<order>({
   productName: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
-});
+}, { _id: false } );
 
 const userSchema = new Schema<User>({
   userId: { type: Number, required: [true, 'ID is required'], unique: true },
@@ -40,4 +43,4 @@ const userSchema = new Schema<User>({
   },
 });
 
-export const UserModel = model<User>('User',userSchema)
+export const UserModel = model<User>('User', userSchema);

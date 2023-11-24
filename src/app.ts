@@ -9,7 +9,7 @@ app.use(cors());
 // ========================
 // application routes
 // ========================
-app.use('/api/users', UserRoutes);
+app.use('/api', UserRoutes);
 
 
 

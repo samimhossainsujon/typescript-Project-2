@@ -1,5 +1,3 @@
-
-
 export type fullName = {
   firstName: 'string';
   lastName: 'string';
@@ -25,7 +23,7 @@ export type User = {
   email: string;
   isActive: boolean;
   hobbies: string[];
-  fullNames:fullName;
-  address:addres;
-  orders:order[]
+  fullNames: fullName;
+  address: addres;
+  orders: order[];
 };

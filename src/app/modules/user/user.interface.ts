@@ -1,30 +1,31 @@
 
 
-export type User= {
+export type fullName = {
+  firstName: 'string';
+  lastName: 'string';
+};
 
-    userId: "number",
-    username: "string",
-    password: "string",
-    fullName: {
-        firstName: "string",
-        lastName: "string"
-    },
-    age: "number",
-    email: "string",
-    isActive: "boolean",
-    hobbies: [
-        "string",
-        "string"
-    ],
-    address: {
-        street: "string",
-        city: "string",
-        country: "string"
-    },
-    orders:{
-        productName:string,
-        price:number,
-        quantity:number
-    }
+export type addres = {
+  street: 'string';
+  city: 'string';
+  country: 'string';
+};
 
-}
+export type order = {
+  productName: string;
+  price: number;
+  quantity: number;
+};
+
+export type User = {
+  userId: number;
+  username: string;
+  password: string;
+  age: number;
+  email: string;
+  isActive: boolean;
+  hobbies: string[];
+  fullNames:fullName;
+  address:addres;
+  orders:order[]
+};

@@ -122,10 +122,50 @@ const deleteSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// ============================================
+//  add new product in order
+// ============================================
+
+// const addNewProductToOrderUser = async (req: Request, res: Response) => {
+//   try {
+//     const userId = req.params.userId;
+//     const orderData = req.body;
+
+//     if (!userId) {
+//       throw new Error('User ID is required');
+//     }
+
+//     await userServices.addNewProductToOrderFromDB(userId, orderData);
+
+//     res.status(200).json({
+//       success: true,
+//       message: 'Order created successfully!',
+//       data: null,
+//     });
+//   } catch (error) {
+//     console.log(error);
+
+//     const errorMessage =
+//       error instanceof Error
+//         ? error.message
+//         : 'Failed to add new product to order';
+
+//     res.status(400).json({
+//       success: false,
+//       message: errorMessage,
+//       error: {
+//         code: 400,
+//         description: errorMessage,
+//       },
+//     });
+//   }
+// };
+
 export const userController = {
   createUser,
   getAllUser,
   getSingelUser,
   updateSingelUser,
   deleteSingleUser,
+  // addNewProductToOrderUser
 };

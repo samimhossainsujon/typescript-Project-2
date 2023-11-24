@@ -97,10 +97,39 @@ const deleteUserDataFromDB = async (userId: string) => {
   return result;
 };
 
+//==========================================
+// Add New Product in Order
+// =========================================
+
+
+// const addNewProductToOrderFromDB = async (userId: string, orderData: any) => {
+//   try {
+//     const user = await UserModel.findOne({ userId });
+
+//     if (!user) {
+//       throw new Error('User not found');
+//     }
+
+//     if (!user.orders) {
+//       user.orders = [];
+//     }
+//     user.orders.push(orderData);
+//     await user.save();
+
+//     return null; 
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error('Failed to add new product to order');
+//   }
+// };
+
+
+
 export const userServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getSingelUserFromDB,
   updateUserDataInDB,
   deleteUserDataFromDB,
+//   addNewProductToOrderFromDB,
 };

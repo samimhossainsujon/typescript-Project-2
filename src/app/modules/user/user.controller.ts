@@ -101,20 +101,16 @@ const updateSingelUser = async (req: Request, res: Response) => {
 const deleteSingleUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
-
     if (!userId) {
       throw new Error('User ID is required');
     }
-
-    const result = await userServices.deleteUserDataFromDB(userId);
-
+    await userServices.deleteUserDataFromDB(userId);
     res.status(200).json({
       success: true,
       message: 'User deleted successfully!',
-      data: result,
+      data: null,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({
       success: false,
       message: 'Failed to delete user',

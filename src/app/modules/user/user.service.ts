@@ -93,18 +93,8 @@ const updateUserDataInDB = async (
 // =======================================
 
 const deleteUserDataFromDB = async (userId: string) => {
-  try {
-    const result = await UserModel.findOneAndDelete({ userId });
-
-    if (!result) {
-      throw new Error('User not found');
-    }
-
-    return result;
-  } catch (error) {
-    console.log(error);
-    throw new Error('Failed to delete user');
-  }
+  const result = await UserModel.findOneAndDelete({ userId });
+  return result;
 };
 
 export const userServices = {
@@ -112,5 +102,5 @@ export const userServices = {
   getAllUserFromDB,
   getSingelUserFromDB,
   updateUserDataInDB,
-  deleteUserDataFromDB
+  deleteUserDataFromDB,
 };

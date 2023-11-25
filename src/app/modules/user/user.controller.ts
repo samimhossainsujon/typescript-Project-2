@@ -130,6 +130,7 @@ const singleUserOrder = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     const UserOrderData = req.body;
+
     if (!userId) {
       throw new Error('User ID is required');
     }
@@ -221,7 +222,5 @@ export const userController = {
   deleteSingleUser,
   singleUserOrder,
   getSingelUserOrder,
-  getSingelUserOrderTotalPrice
+  getSingelUserOrderTotalPrice,
 };
-
-

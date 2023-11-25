@@ -101,8 +101,10 @@ const deleteUserDataFromDB = async (userId: number) => {
 // Add New Product in Order
 // =========================================
 
+
+
 const UserOrdersInDB = async (updatedData: {
-  orders?: {
+  orders: {
     productName: string;
     price: number;
     quantity: number; };}) => {
@@ -119,6 +121,10 @@ const UserOrdersInDB = async (updatedData: {
 
   return result;
 };
+
+
+
+
 
 // ===========================================
 // get  orders for a specific user

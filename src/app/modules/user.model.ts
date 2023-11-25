@@ -28,8 +28,12 @@ const ordersSchema = new Schema<order>(
 );
 
 const userSchema = new Schema<User>({
-  userId: { type: Number, required: [true, 'ID is required'], unique: true },
-  username: { type: String, required: [true,'username is required'], unique: true },
+  userId: { type: Number, required: true, unique: true },
+  username: {
+    type: String,
+    required: [true, 'username is required'],
+    unique: true,
+  },
   password: { type: String, required: true },
   fullNames: {
     type: fullNameSchema,

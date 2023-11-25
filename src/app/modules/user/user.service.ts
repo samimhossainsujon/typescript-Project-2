@@ -29,7 +29,7 @@ const getAllUserFromDB = async () => {
 // get singel user, get by userid
 // ======================================
 
-const getSingelUserFromDB = async (userId: string) => {
+const getSingelUserFromDB = async (userId:number|string) => {
   const result = await UserModel.findOne({ userId }).select({
     userId: 1,
     username: 1,
@@ -49,7 +49,7 @@ const getSingelUserFromDB = async (userId: string) => {
 // =======================================
 
 const updateUserDataInDB = async (
-  userId: number,
+  userId: number|string,
   updatedData: {
     username?: string;
     fullNames?: {
@@ -92,7 +92,7 @@ const updateUserDataInDB = async (
 // delete User Data In DB
 // =======================================
 
-const deleteUserDataFromDB = async (userId: number) => {
+const deleteUserDataFromDB = async (userId: number |string) => {
   const result = await UserModel.findOneAndDelete({ userId });
   return result;
 };
@@ -101,13 +101,16 @@ const deleteUserDataFromDB = async (userId: number) => {
 // Add New Product in Order
 // =========================================
 
-
-
-const UserOrdersInDB = async (updatedData: {
-  orders: {
-    productName: string;
-    price: number;
-    quantity: number; };}) => {
+const UserOrdersInDB = async (
+  userId: number |string,
+  updatedData: {
+    orders: {
+      productName: string;
+      price: number;
+      quantity: number;
+    };
+  },
+) => {
   const result = await UserModel.findOneAndUpdate({ userId }, updatedData, {
     new: true,
   }).select({
@@ -122,15 +125,11 @@ const UserOrdersInDB = async (updatedData: {
   return result;
 };
 
-
-
-
-
 // ===========================================
 // get  orders for a specific user
 // ===========================================
 
-const getSingelUserOrdersFromDB = async (userId: string) => {
+const getSingelUserOrdersFromDB = async (userId: number |string) => {
   const result = await UserModel.findOne({ userId }).select({
     orders: 1,
     _id: 0,
@@ -142,7 +141,7 @@ const getSingelUserOrdersFromDB = async (userId: string) => {
 //  Calculate Total Price of Orders for a Specific User
 // ===========================================
 
-const calculateTotalPriceSpecificUser = async (userId: number) => {
+const calculateTotalPriceSpecificUser = async (userId: number |string) => {
   const result = await UserModel.findOne({ userId }).select({
     orders: 1,
     _id: 0,

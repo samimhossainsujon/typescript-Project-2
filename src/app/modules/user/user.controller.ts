@@ -71,7 +71,7 @@ const getSingelUser = async (req: Request, res: Response) => {
 
 const updateSingelUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId:string = req.params.userId;
     const updatedData = req.body;
     if (!userId) {
       throw new Error('User ID is required');

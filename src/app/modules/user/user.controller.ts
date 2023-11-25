@@ -126,40 +126,92 @@ const deleteSingleUser = async (req: Request, res: Response) => {
 //  add new product in order
 // ============================================
 
-// const addNewProductToOrderUser = async (req: Request, res: Response) => {
-//   try {
-//     const userId = req.params.userId;
-//     const orderData = req.body;
+const singleUserOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const UserOrderData = req.body;
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+    await userServices.UserOrdersInDB(userId, UserOrderData);
+    res.status(200).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 400,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
-//     if (!userId) {
-//       throw new Error('User ID is required');
-//     }
+// ===========================================
+// get orders a specific user
+// ===========================================
 
-//     await userServices.addNewProductToOrderFromDB(userId, orderData);
+const getSingelUserOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+    const result = await userServices.getSingelUserOrdersFromDB(userId);
+    if (!result) {
+      throw new Error('User not found');
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Order fetched successfully!',
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 400,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
-//     res.status(200).json({
-//       success: true,
-//       message: 'Order created successfully!',
-//       data: null,
-//     });
-//   } catch (error) {
-//     console.log(error);
-
-//     const errorMessage =
-//       error instanceof Error
-//         ? error.message
-//         : 'Failed to add new product to order';
-
-//     res.status(400).json({
-//       success: false,
-//       message: errorMessage,
-//       error: {
-//         code: 400,
-//         description: errorMessage,
-//       },
-//     });
-//   }
-// };
+// ===========================================
+//  Calculate Total Price of Orders for a Specific User
+// ===========================================
+const getSingelUserOrderTotalPrice = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+    const ordertotalPrice =
+      await userServices.calculateTotalPriceSpecificUser(userId);
+    if (!ordertotalPrice) {
+      throw new Error('User not found');
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Total price calculated successfully!',
+      data: ordertotalPrice,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 400,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
 export const userController = {
   createUser,
@@ -167,5 +219,9 @@ export const userController = {
   getSingelUser,
   updateSingelUser,
   deleteSingleUser,
-  // addNewProductToOrderUser
+  singleUserOrder,
+  getSingelUserOrder,
+  getSingelUserOrderTotalPrice
 };
+
+

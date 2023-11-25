@@ -49,7 +49,7 @@ const getSingelUserFromDB = async (userId: string) => {
 // =======================================
 
 const updateUserDataInDB = async (
-  userId: string,
+  userId: number,
   updatedData: {
     username?: string;
     fullNames?: {
@@ -92,7 +92,7 @@ const updateUserDataInDB = async (
 // delete User Data In DB
 // =======================================
 
-const deleteUserDataFromDB = async (userId: string) => {
+const deleteUserDataFromDB = async (userId: number) => {
   const result = await UserModel.findOneAndDelete({ userId });
   return result;
 };
@@ -101,29 +101,57 @@ const deleteUserDataFromDB = async (userId: string) => {
 // Add New Product in Order
 // =========================================
 
+const UserOrdersInDB = async (updatedData: {
+  orders?: {
+    productName: string;
+    price: number;
+    quantity: number; };}) => {
+  const result = await UserModel.findOneAndUpdate({ userId }, updatedData, {
+    new: true,
+  }).select({
+    orders: 1,
+    _id: 0,
+  });
 
-// const addNewProductToOrderFromDB = async (userId: string, orderData: any) => {
-//   try {
-//     const user = await UserModel.findOne({ userId });
+  if (!result) {
+    throw new Error('User not found');
+  }
 
-//     if (!user) {
-//       throw new Error('User not found');
-//     }
+  return result;
+};
 
-//     if (!user.orders) {
-//       user.orders = [];
-//     }
-//     user.orders.push(orderData);
-//     await user.save();
+// ===========================================
+// get  orders for a specific user
+// ===========================================
 
-//     return null; 
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error('Failed to add new product to order');
-//   }
-// };
+const getSingelUserOrdersFromDB = async (userId: string) => {
+  const result = await UserModel.findOne({ userId }).select({
+    orders: 1,
+    _id: 0,
+  });
+  return result;
+};
 
+// ===========================================
+//  Calculate Total Price of Orders for a Specific User
+// ===========================================
 
+const calculateTotalPriceSpecificUser = async (userId: number) => {
+  const result = await UserModel.findOne({ userId }).select({
+    orders: 1,
+    _id: 0,
+  });
+  if (!result) {
+    throw new Error('User not found');
+  }
+  const totalPrice = (result?.orders || []).reduce(
+    (total: number, order: { price: number; quantity: number }) => {
+      return total + (order.price || 0) * (order.quantity || 0);
+    },
+    0,
+  );
+  return totalPrice;
+};
 
 export const userServices = {
   createUserIntoDB,
@@ -131,5 +159,7 @@ export const userServices = {
   getSingelUserFromDB,
   updateUserDataInDB,
   deleteUserDataFromDB,
-//   addNewProductToOrderFromDB,
+  UserOrdersInDB,
+  getSingelUserOrdersFromDB,
+  calculateTotalPriceSpecificUser,
 };

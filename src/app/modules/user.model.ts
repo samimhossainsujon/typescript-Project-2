@@ -9,21 +9,27 @@ const fullNameSchema = new Schema<fullName>(
   { _id: false },
 );
 
-const addressSchema = new Schema<addres>({
-  street: { type: String, required: true },
-  city: { type: String, required: true },
-  country: { type: String, required: true },
-}, { _id: false } );
+const addressSchema = new Schema<addres>(
+  {
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    country: { type: String, required: true },
+  },
+  { _id: false },
+);
 
-const ordersSchema = new Schema<order>({
-  productName: { type: String, required: true },
-  price: { type: Number, required: true },
-  quantity: { type: Number, required: true },
-}, { _id: false } );
+const ordersSchema = new Schema<order>(
+  {
+    productName: { type: String },
+    price: { type: Number },
+    quantity: { type: Number },
+  },
+  { _id: false },
+);
 
 const userSchema = new Schema<User>({
   userId: { type: Number, required: [true, 'ID is required'], unique: true },
-  username: { type: String, required: true },
+  username: { type: String, required: [true,'username is required'], unique: true },
   password: { type: String, required: true },
   fullNames: {
     type: fullNameSchema,
@@ -39,7 +45,6 @@ const userSchema = new Schema<User>({
   },
   orders: {
     type: [ordersSchema],
-    required: true,
   },
 });
 
